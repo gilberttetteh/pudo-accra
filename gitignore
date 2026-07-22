@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Environment and secrets
+.env
+*.env.local
+config/secrets.yaml
+
+# Jupyter
+.ipynb_checkpoints/
+
+# QGIS
+*.qgz~
+*.qgs~
+.qgis2/
+
+# Geospatial data (large files, keep out of git)
+data/raw/
+data/processed/
+*.gpkg
+*.shp
+*.shx
+*.dbf
+*.prj
+*.tif
+*.tiff
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
