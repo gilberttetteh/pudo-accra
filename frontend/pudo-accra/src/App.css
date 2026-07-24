@@ -1,0 +1,178 @@
+:root {
+  --primary-color: #FF6B35; /* Vibrant Delivery Orange */
+  --secondary-color: #004E89; /* Deep Contrasting Blue */
+  --bg-color: #F7F9F9; /* Bright Off-White */
+  --surface-color: #FFFFFF;
+  --text-main: #1A1A24;
+  --text-muted: #6B7280;
+  --font-family: 'Poppins', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  overflow: hidden; 
+}
+
+/* --- Intro Animation Styles --- */
+.intro-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--bg-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.intro-text {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--secondary-color);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.van-container {
+  position: absolute;
+  top: 55%;
+}
+
+/* --- Main Layout Styles --- */
+.dashboard {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 350px;
+  background-color: var(--surface-color);
+  padding: 2rem;
+  box-shadow: 4px 0 15px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+}
+
+.brand-title {
+  color: var(--primary-color);
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.control-group {
+  margin-bottom: 1.5rem;
+}
+
+.control-group label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text-muted);
+}
+
+.control-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #E5E7EB;
+  border-radius: 8px;
+  font-family: var(--font-family);
+  font-size: 1rem;
+  transition: border-color 0.2s;
+  background-color: #FAFAFA;
+}
+
+.control-input:focus {
+  outline: none;
+  border-color: var(--secondary-color);
+  background-color: #FFFFFF;
+}
+
+.btn-populate {
+  margin-top: 1rem;
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: 8px;
+  font-family: var(--font-family);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-populate:hover {
+  background-color: #003666;
+}
+
+.btn-populate:active {
+  transform: scale(0.98);
+}
+
+/* Map Placeholder Area */
+.map-wrapper {
+  flex: 1;
+  height: 100vh;
+  background-color: #E2E8F0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.map-placeholder-content {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 2rem 4rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  backdrop-filter: blur(4px);
+}
+
+.map-placeholder-content h2 {
+  color: var(--secondary-color);
+  margin-bottom: 1rem;
+}
+
+.map-placeholder-content p {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Decorative grid background for the placeholder */
+.map-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: 
+    linear-gradient(rgba(0, 78, 137, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 78, 137, 0.05) 1px, transparent 1px);
+  background-size: 50px 50px;
+  z-index: 0;
+}
+
+.map-placeholder-content {
+  z-index: 1;
+}
