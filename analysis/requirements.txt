@@ -1,0 +1,14 @@
+geopandas
+rasterio
+scipy
+numpy
+pandas
+pyarrow
+requests
+osmium
+streamlit
+pydeck
+plotly
+tqdm
+fastapi
+uvicorn
