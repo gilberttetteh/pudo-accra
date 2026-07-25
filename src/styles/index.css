@@ -1,0 +1,381 @@
+@import 'tailwindcss';
+
+/* ==========================================================================
+   ACCRA PUDO — DESIGN TOKEN SYSTEM
+   ==========================================================================
+   Tailwind v4 CSS-first theming. Every token below becomes a Tailwind
+   utility automatically (e.g. --color-primary-600 -> bg-primary-600,
+   text-primary-600, border-primary-600, ring-primary-600, etc.).
+
+   Semantic tokens (background, surface, border, text-*) are redefined
+   inside `.dark` further down so the same utility classes
+   (bg-background, text-text-primary, border-border, ...) work in both
+   themes without any component-level branching.
+   ========================================================================== */
+
+@theme {
+  /* ------------------------------------------------------------------
+     Typography — family
+     ------------------------------------------------------------------ */
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+
+  /* ------------------------------------------------------------------
+     Color — Primary (brand blue, used for primary actions & active states)
+     ------------------------------------------------------------------ */
+  --color-primary-50: #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-800: #1e40af;
+  --color-primary-900: #1e3a8a;
+  --color-primary-950: #172554;
+
+  /* Secondary (indigo, used for secondary emphasis / planner tooling) */
+  --color-secondary-50: #eef2ff;
+  --color-secondary-100: #e0e7ff;
+  --color-secondary-200: #c7d2fe;
+  --color-secondary-300: #a5b4fc;
+  --color-secondary-400: #818cf8;
+  --color-secondary-500: #6366f1;
+  --color-secondary-600: #4f46e5;
+  --color-secondary-700: #4338ca;
+  --color-secondary-800: #3730a3;
+  --color-secondary-900: #312e81;
+  --color-secondary-950: #1e1b4b;
+
+  /* Accent (teal, used for candidate nodes / highlights) */
+  --color-accent-50: #f0fdfa;
+  --color-accent-100: #ccfbf1;
+  --color-accent-200: #99f6e4;
+  --color-accent-300: #5eead4;
+  --color-accent-400: #2dd4bf;
+  --color-accent-500: #14b8a6;
+  --color-accent-600: #0d9488;
+  --color-accent-700: #0f766e;
+  --color-accent-800: #115e59;
+  --color-accent-900: #134e4a;
+  --color-accent-950: #042f2e;
+
+  /* Success */
+  --color-success-50: #f0fdf4;
+  --color-success-100: #dcfce7;
+  --color-success-200: #bbf7d0;
+  --color-success-300: #86efac;
+  --color-success-400: #4ade80;
+  --color-success-500: #22c55e;
+  --color-success-600: #16a34a;
+  --color-success-700: #15803d;
+  --color-success-800: #166534;
+  --color-success-900: #14532d;
+  --color-success-950: #052e16;
+
+  /* Warning */
+  --color-warning-50: #fffbeb;
+  --color-warning-100: #fef3c7;
+  --color-warning-200: #fde68a;
+  --color-warning-300: #fcd34d;
+  --color-warning-400: #fbbf24;
+  --color-warning-500: #f59e0b;
+  --color-warning-600: #d97706;
+  --color-warning-700: #b45309;
+  --color-warning-800: #92400e;
+  --color-warning-900: #78350f;
+  --color-warning-950: #451a03;
+
+  /* Error */
+  --color-error-50: #fef2f2;
+  --color-error-100: #fee2e2;
+  --color-error-200: #fecaca;
+  --color-error-300: #fca5a5;
+  --color-error-400: #f87171;
+  --color-error-500: #ef4444;
+  --color-error-600: #dc2626;
+  --color-error-700: #b91c1c;
+  --color-error-800: #991b1b;
+  --color-error-900: #7f1d1d;
+  --color-error-950: #450a0a;
+
+  /* Info */
+  --color-info-50: #f0f9ff;
+  --color-info-100: #e0f2fe;
+  --color-info-200: #bae6fd;
+  --color-info-300: #7dd3fc;
+  --color-info-400: #38bdf8;
+  --color-info-500: #0ea5e9;
+  --color-info-600: #0284c7;
+  --color-info-700: #0369a1;
+  --color-info-800: #075985;
+  --color-info-900: #0c4a6e;
+  --color-info-950: #082f49;
+
+  /* Neutral scale — backbone of surfaces, borders, and text */
+  --color-neutral-0: #ffffff;
+  --color-neutral-50: #f8fafc;
+  --color-neutral-100: #f1f5f9;
+  --color-neutral-200: #e2e8f0;
+  --color-neutral-300: #cbd5e1;
+  --color-neutral-400: #94a3b8;
+  --color-neutral-500: #64748b;
+  --color-neutral-600: #475569;
+  --color-neutral-700: #334155;
+  --color-neutral-800: #1e293b;
+  --color-neutral-900: #0f172a;
+  --color-neutral-950: #020617;
+
+  /* ------------------------------------------------------------------
+     Semantic tokens — LIGHT MODE (default).
+     Components should reference these, never raw palette values.
+     ------------------------------------------------------------------ */
+  --color-background: var(--color-neutral-0);
+  --color-surface: var(--color-neutral-0);
+  --color-surface-secondary: var(--color-neutral-50);
+  --color-surface-tertiary: var(--color-neutral-100);
+  --color-surface-inverse: var(--color-neutral-900);
+
+  --color-border: var(--color-neutral-200);
+  --color-border-strong: var(--color-neutral-300);
+  --color-border-focus: var(--color-primary-500);
+
+  --color-text-primary: var(--color-neutral-900);
+  --color-text-secondary: var(--color-neutral-600);
+  --color-text-tertiary: var(--color-neutral-400);
+  --color-text-inverse: var(--color-neutral-0);
+  --color-text-link: var(--color-primary-600);
+
+  /* Map overlay colors — kept semantic so cartography can be re-themed
+     without touching component code. */
+  --color-map-node-existing: var(--color-primary-600);
+  --color-map-node-candidate: var(--color-accent-500);
+  --color-map-node-selected: var(--color-warning-500);
+  --color-map-flood-zone: #ef444440;
+  --color-map-isochrone-fill: #3b82f626;
+  --color-map-isochrone-stroke: var(--color-primary-500);
+  --color-map-road: var(--color-neutral-300);
+  --color-map-heatmap-low: var(--color-warning-100);
+  --color-map-heatmap-mid: var(--color-warning-400);
+  --color-map-heatmap-high: var(--color-error-600);
+
+  /* Analytics / chart categorical series */
+  --color-chart-1: var(--color-primary-500);
+  --color-chart-2: var(--color-accent-500);
+  --color-chart-3: var(--color-warning-500);
+  --color-chart-4: var(--color-secondary-500);
+  --color-chart-5: var(--color-error-400);
+  --color-chart-6: var(--color-info-500);
+
+  /* ------------------------------------------------------------------
+     Spacing — semantic aliases over Tailwind's default numeric scale.
+     Numeric utilities (p-4, gap-6, ...) remain available as-is; these
+     named tokens exist for design-doc traceability (4/8/12/16/20/24/
+     32/40/48/64/80/96) and for use inside component variant definitions.
+     ------------------------------------------------------------------ */
+  --spacing-xs: 0.25rem; /* 4px */
+  --spacing-sm: 0.5rem; /* 8px */
+  --spacing-ms: 0.75rem; /* 12px */
+  --spacing-md: 1rem; /* 16px */
+  --spacing-lg: 1.25rem; /* 20px */
+  --spacing-xl: 1.5rem; /* 24px */
+  --spacing-2xl: 2rem; /* 32px */
+  --spacing-3xl: 2.5rem; /* 40px */
+  --spacing-4xl: 3rem; /* 48px */
+  --spacing-5xl: 4rem; /* 64px */
+  --spacing-6xl: 5rem; /* 80px */
+  --spacing-7xl: 6rem; /* 96px */
+
+  /* ------------------------------------------------------------------
+     Border radius
+     ------------------------------------------------------------------ */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* ------------------------------------------------------------------
+     Shadows — elevation system
+     ------------------------------------------------------------------ */
+  --shadow-sm: 0 1px 2px 0 rgb(15 23 42 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(15 23 42 / 0.08), 0 2px 4px -2px rgb(15 23 42 / 0.06);
+  --shadow-lg: 0 10px 15px -3px rgb(15 23 42 / 0.08), 0 4px 6px -4px rgb(15 23 42 / 0.05);
+  --shadow-xl: 0 20px 25px -5px rgb(15 23 42 / 0.1), 0 8px 10px -6px rgb(15 23 42 / 0.05);
+  --shadow-floating: 0 12px 32px -8px rgb(15 23 42 / 0.18);
+
+  /* ------------------------------------------------------------------
+     Animation — durations & easing
+     ------------------------------------------------------------------ */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
+  --ease-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 320ms;
+
+  /* ------------------------------------------------------------------
+     Typography scale — size, line-height, letter-spacing, weight.
+     Generates: text-display, text-h1, text-h2, text-h3, text-h4,
+     text-body-lg, text-body, text-small, text-caption, text-code
+     ------------------------------------------------------------------ */
+  --text-display: 3rem;
+  --text-display--line-height: 1.15;
+  --text-display--letter-spacing: -0.02em;
+  --text-display--font-weight: 650;
+
+  --text-h1: 2.25rem;
+  --text-h1--line-height: 1.2;
+  --text-h1--letter-spacing: -0.02em;
+  --text-h1--font-weight: 650;
+
+  --text-h2: 1.875rem;
+  --text-h2--line-height: 1.25;
+  --text-h2--letter-spacing: -0.015em;
+  --text-h2--font-weight: 600;
+
+  --text-h3: 1.5rem;
+  --text-h3--line-height: 1.3;
+  --text-h3--letter-spacing: -0.01em;
+  --text-h3--font-weight: 600;
+
+  --text-h4: 1.25rem;
+  --text-h4--line-height: 1.35;
+  --text-h4--letter-spacing: -0.01em;
+  --text-h4--font-weight: 600;
+
+  --text-body-lg: 1.125rem;
+  --text-body-lg--line-height: 1.6;
+  --text-body-lg--font-weight: 400;
+
+  --text-body: 0.9375rem;
+  --text-body--line-height: 1.6;
+  --text-body--font-weight: 400;
+
+  --text-small: 0.8125rem;
+  --text-small--line-height: 1.5;
+  --text-small--font-weight: 400;
+
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1.4;
+  --text-caption--letter-spacing: 0.01em;
+  --text-caption--font-weight: 500;
+
+  --text-code: 0.8125rem;
+  --text-code--line-height: 1.5;
+  --text-code--font-weight: 400;
+}
+
+/* ==========================================================================
+   DARK MODE — overrides semantic CSS variables only.
+   Because component code always uses semantic utilities (bg-background,
+   text-text-primary, border-border, ...), nothing beyond this block needs
+   to change to support dark mode.
+   ========================================================================== */
+.dark {
+  --color-background: var(--color-neutral-950);
+  --color-surface: var(--color-neutral-900);
+  --color-surface-secondary: var(--color-neutral-800);
+  --color-surface-tertiary: var(--color-neutral-800);
+  --color-surface-inverse: var(--color-neutral-0);
+
+  --color-border: var(--color-neutral-800);
+  --color-border-strong: var(--color-neutral-700);
+  --color-border-focus: var(--color-primary-400);
+
+  --color-text-primary: var(--color-neutral-50);
+  --color-text-secondary: var(--color-neutral-400);
+  --color-text-tertiary: var(--color-neutral-500);
+  --color-text-inverse: var(--color-neutral-900);
+  --color-text-link: var(--color-primary-400);
+
+  --color-map-road: var(--color-neutral-700);
+  --shadow-floating: 0 12px 32px -8px rgb(0 0 0 / 0.5);
+}
+
+/* ==========================================================================
+   Base layer
+   ========================================================================== */
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    color-scheme: light;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Consistent, visible focus ring across all interactive elements */
+  :focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+  }
+}
+
+/* ==========================================================================
+   Leaflet theme overrides — re-skins default Leaflet chrome (popups,
+   zoom control) with design tokens so the map matches the rest of the
+   app instead of Leaflet's default white/blue styling.
+   ========================================================================== */
+@layer components {
+  .leaflet-popup-content-wrapper,
+  .leaflet-popup-tip {
+    background: var(--color-surface);
+    color: var(--color-text-primary);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .leaflet-popup-content-wrapper {
+    border-radius: var(--radius-lg);
+  }
+
+  .leaflet-container {
+    font-family: var(--font-sans);
+    background: var(--color-surface-secondary);
+  }
+
+  /* Marker hover animation. Leaflet controls `transform` on the outer
+     .leaflet-marker-icon div for positioning (translate3d), so hover
+     scaling must target the inner span (see NodeMarker/CandidateMarker)
+     to avoid fighting Leaflet's own transform. */
+  .accra-marker-inner {
+    transition: transform var(--duration-fast) var(--ease-standard);
+    transform-origin: center;
+  }
+  .accra-marker:hover .accra-marker-inner {
+    transform: scale(1.3);
+  }
+
+  /* Isochrone ring fade-in — plays once when a ring's SVG path mounts
+     (i.e. when a node is selected and the isochrone layer is visible).
+     Targets the whole path element's opacity (compounding with the
+     fill/stroke opacity Leaflet sets inline), not `fill-opacity`
+     directly, since CSS animations can't target SVG presentation
+     attributes set via inline style. */
+  .isochrone-ring {
+    animation: isochrone-fade-in 420ms ease-out;
+  }
+  @keyframes isochrone-fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
