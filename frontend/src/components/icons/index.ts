@@ -82,4 +82,12 @@ export {
   GripVertical,
   ArrowUp,
   ArrowDown,
+  // Dashboard (Phase 7)
+  Clock,
+  Eye,
+  GitCompare,
+  RefreshCw,
+  ArrowRight,
+  SlidersHorizontal,
+  ClipboardList,
 } from 'lucide-react'
