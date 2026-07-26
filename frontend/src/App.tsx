@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useState } from 'react'
 import { DashboardLayout } from '@/layouts/DashboardLayout'
 import { LoadingState } from '@/components/feedback/LoadingState'
 import type { NotificationItem } from '@/components/navigation/NotificationCenter'
@@ -9,6 +9,10 @@ import type { NotificationItem } from '@/components/navigation/NotificationCente
 // chunk streams in behind a loading state, rather than blocking on it.
 const MapWorkspace = lazy(() =>
   import('@/features/map').then((mod) => ({ default: mod.MapWorkspace }))
+)
+
+const DashboardPage = lazy(() =>
+  import('@/features/dashboard').then((mod) => ({ default: mod.DashboardPage }))
 )
 
 // Static preview data for the shell smoke-test below. Computed once at
@@ -34,19 +38,26 @@ const PREVIEW_NOTIFICATIONS: NotificationItem[] = [
  * Root application component.
  *
  * Still a placeholder — real routing arrives in a future phase. This
- * currently previews DashboardLayout + the Map Workspace end-to-end so
- * the GIS foundation can be smoke-tested visually. MapWorkspace is
- * lazy-loaded (see above) as the first step of eventual route-level
- * code-splitting once real routing exists.
+ * currently previews DashboardLayout + the Dashboard/Map Workspace
+ * end-to-end so both can be smoke-tested visually. A local `view` toggle
+ * stands in for real routing until that exists — MapWorkspace and
+ * DashboardPage are both lazy-loaded as the first step of eventual
+ * route-level code-splitting.
  */
 function App() {
+  const [view, setView] = useState<'dashboard' | 'map'>('dashboard')
+
   return (
     <DashboardLayout
       notifications={PREVIEW_NOTIFICATIONS}
       breadcrumbItems={[{ label: 'Dashboard', href: '/' }, { label: 'Map' }]}
     >
-      <Suspense fallback={<LoadingState message="Loading map workspace…" fullHeight />}>
-        <MapWorkspace />
+      <Suspense fallback={<LoadingState message="Loading…" fullHeight />}>
+        {view === 'dashboard' ? (
+          <DashboardPage onOpenMapWorkspace={() => setView('map')} />
+        ) : (
+          <MapWorkspace />
+        )}
       </Suspense>
     </DashboardLayout>
   )
