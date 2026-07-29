@@ -1,0 +1,70 @@
+name: Deploy PUDO Nodes to GitHub Pages
+
+# Publishes the PUDO Nodes planner (frontend/pudo-accra) as a static site.
+# There is no backend to deploy: analysis/export_static.py has already written
+# the pipeline's results to public/data/, which Vite copies into the build.
+#
+# Before the first run, enable Pages for this repo:
+#   Settings -> Pages -> Build and deployment -> Source: "GitHub Actions"
+
+on:
+  push:
+    branches: [main]
+  # Lets you re-publish from the Actions tab without pushing a commit.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Let a running deploy finish rather than cancelling it — a half-published
+# site is worse than a slightly stale one.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend/pudo-accra
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/pudo-accra/package-lock.json
+
+      - run: npm ci
+
+      - name: Build
+        # A project repo is served from https://<user>.github.io/<repo>/, so the
+        # base path must match the repo name or every asset — and every data
+        # file planner.js fetches — 404s.
+        env:
+          VITE_BASE: /${{ github.event.repository.name }}/
+        run: npm run build
+
+      - name: Add SPA fallback
+        # Pages has no rewrite rules and serves 404.html for any unmatched
+        # path. Making it a copy of index.html means a stray URL still loads
+        # the app instead of GitHub's 404 page.
+        run: cp dist/index.html dist/404.html
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: frontend/pudo-accra/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

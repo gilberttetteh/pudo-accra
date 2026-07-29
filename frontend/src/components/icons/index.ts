@@ -90,4 +90,7 @@ export {
   ArrowRight,
   SlidersHorizontal,
   ClipboardList,
+  // Siting analysis (real pipeline data)
+  Target,
+  Ban,
 } from 'lucide-react'

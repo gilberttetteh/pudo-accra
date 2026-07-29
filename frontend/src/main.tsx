@@ -23,7 +23,9 @@ import '@/styles/index.css'
  */
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
+    {/* basename tracks vite's `base` so routes resolve correctly whether the
+        app is served from the domain root or a GitHub Pages sub-path. */}
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider>
           <ToastProvider>

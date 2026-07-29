@@ -4,6 +4,11 @@ import path from 'node:path'
 
 // https://vite.dev/config/
 export default defineConfig({
+  // Where the app will be served from. Root by default (Vercel/Netlify, local
+  // dev); GitHub Pages serves a project repo from /<repo-name>/, so the deploy
+  // workflow sets VITE_BASE=/pudo-accra/. Asset URLs and the router basename
+  // both derive from this, so it must be set at build time, not run time.
+  base: process.env.VITE_BASE || '/',
   plugins: [react()],
   resolve: {
     alias: {

@@ -59,12 +59,32 @@ body {
 /* Sidebar */
 .sidebar {
   width: 350px;
+  flex-shrink: 0;
   background-color: var(--surface-color);
   padding: 2rem;
   box-shadow: 4px 0 15px rgba(0,0,0,0.05);
   display: flex;
   flex-direction: column;
   z-index: 10;
+  /* The controls plus the results block can exceed the viewport on short
+     screens, and the sidebar is the only thing that should scroll — the map
+     next to it is fixed to the window height. */
+  overflow-y: auto;
+}
+
+.sidebar-intro {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin-bottom: 1.75rem;
+}
+
+.sidebar-footnote {
+  margin-top: auto;
+  padding-top: 1.5rem;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--text-muted);
 }
 
 .brand-title {
@@ -82,11 +102,51 @@ body {
 }
 
 .control-group label {
-  display: block;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
   font-size: 0.9rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
   color: var(--text-muted);
+}
+
+.label-value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--secondary-color);
+}
+
+.control-hint {
+  margin-top: 0.4rem;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+.control-range {
+  width: 100%;
+  accent-color: var(--primary-color);
+  cursor: pointer;
+}
+
+.control-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+}
+
+.control-checkbox input {
+  accent-color: var(--primary-color);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
 }
 
 .control-input {
@@ -120,59 +180,180 @@ body {
   transition: background-color 0.2s, transform 0.1s;
 }
 
-.btn-populate:hover {
+.btn-populate:hover:not(:disabled) {
   background-color: #003666;
 }
 
-.btn-populate:active {
+.btn-populate:active:not(:disabled) {
   transform: scale(0.98);
 }
 
-/* Map Placeholder Area */
+.btn-populate:disabled {
+  background-color: #9CA3AF;
+  cursor: not-allowed;
+}
+
+.btn-populate {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* --- Results --- */
+.results {
+  margin-top: 1.75rem;
+  border-top: 2px solid #E5E7EB;
+  padding-top: 1.25rem;
+}
+
+.result-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.55rem 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.result-row + .result-row {
+  border-top: 1px solid #F1F3F5;
+}
+
+.result-row strong {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-main);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Alerts --- */
+.alert {
+  margin-top: 1rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  border-left: 4px solid;
+}
+
+.alert-warning {
+  background-color: #FFF7ED;
+  border-color: var(--primary-color);
+  color: #7C2D12;
+}
+
+.alert-error {
+  background-color: #FEF2F2;
+  border-color: #DC2626;
+  color: #7F1D1D;
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+}
+
+/* --- Map --- */
 .map-wrapper {
   flex: 1;
   height: 100vh;
-  background-color: #E2E8F0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   position: relative;
   overflow: hidden;
+  background-color: #E2E8F0;
 }
 
-.map-placeholder-content {
-  text-align: center;
-  background: rgba(255, 255, 255, 0.8);
-  padding: 2rem 4rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-  backdrop-filter: blur(4px);
+.map-canvas {
+  width: 100%;
+  height: 100%;
 }
 
-.map-placeholder-content h2 {
-  color: var(--secondary-color);
-  margin-bottom: 1rem;
+/* Leaflet sets its own font; pull it back to the app's. */
+.map-canvas,
+.leaflet-container {
+  font-family: var(--font-family);
 }
 
-.map-placeholder-content p {
-  color: var(--text-muted);
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
-}
-
-/* Decorative grid background for the placeholder */
-.map-wrapper::before {
-  content: '';
+.map-legend {
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-image: 
-    linear-gradient(rgba(0, 78, 137, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 78, 137, 0.05) 1px, transparent 1px);
-  background-size: 50px 50px;
-  z-index: 0;
+  bottom: 1.5rem;
+  right: 1rem;
+  /* Above Leaflet's own panes (z-index 400) and controls (1000). */
+  z-index: 1001;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(4px);
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  font-size: 0.78rem;
+  color: var(--text-muted);
 }
 
-.map-placeholder-content {
-  z-index: 1;
+.map-legend-title {
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 0.6rem;
+}
+
+.legend-row {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.18rem 0;
+}
+
+.legend-dot {
+  display: inline-block;
+  border-radius: 50%;
+  flex-shrink: 0;
+  /* Sized inline per row so the swatches mirror the real marker scale. */
+}
+
+.node-popup {
+  font-family: var(--font-family);
+  font-size: 0.8rem;
+  line-height: 1.6;
+  min-width: 175px;
+}
+
+.node-popup strong {
+  display: block;
+  font-size: 0.95rem;
+  color: var(--secondary-color);
+  margin-bottom: 0.3rem;
+}
+
+.node-popup-coords {
+  margin-top: 0.35rem;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+}
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+  body {
+    overflow: auto;
+  }
+
+  .dashboard {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .sidebar {
+    width: 100%;
+    overflow-y: visible;
+  }
+
+  .map-wrapper {
+    height: 65vh;
+    min-height: 420px;
+  }
 }

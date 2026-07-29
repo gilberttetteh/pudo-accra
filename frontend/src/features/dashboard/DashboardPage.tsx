@@ -11,7 +11,9 @@ import { MOCK_POPULATION_CELLS } from '@/mock/population'
 import { MOCK_COVERAGE_GAPS } from '@/mock/coverageGaps'
 import { MOCK_ACTIVITY_EVENTS } from '@/mock/activity'
 import { averageCandidateScore, buildDashboardAlerts } from './selectors'
+import { DashboardPlannerSection } from './DashboardPlannerSection'
 import { DashboardKpiSection } from './DashboardKpiSection'
+import { Badge } from '@/components/ui/Badge'
 import { DashboardMapPreviewCard } from './DashboardMapPreviewCard'
 import { DashboardCoverageSummaryCard } from './DashboardCoverageSummaryCard'
 import { DashboardCandidateRankingsCard } from './DashboardCandidateRankingsCard'
@@ -143,11 +145,19 @@ export function DashboardPage({ onOpenMapWorkspace, onInspectNodes }: DashboardP
         </p>
       </div>
 
-      <DashboardKpiSection
-        stats={stats}
-        candidateCount={candidateNodes.length}
-        averageCandidateScore={avgCandidateScore}
-      />
+      <DashboardPlannerSection />
+
+      <div className="flex flex-col gap-3">
+        <div className="flex items-center gap-2">
+          <h2 className="text-h4 text-text-primary">Network Operations</h2>
+          <Badge tone="neutral">Sample data</Badge>
+        </div>
+        <DashboardKpiSection
+          stats={stats}
+          candidateCount={candidateNodes.length}
+          averageCandidateScore={avgCandidateScore}
+        />
+      </div>
 
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
         <div className="flex flex-col gap-6 xl:col-span-2">

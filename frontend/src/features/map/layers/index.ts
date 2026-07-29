@@ -11,3 +11,8 @@ export * from './CoverageGapLayer'
 export * from './PopulationDensityLayer'
 export * from './AccessibilityLayer'
 export * from './WalkingRadiusLayer'
+// Real siting-analysis layers (see services/planner.ts) — everything above
+// this line renders mock data.
+export * from './StudyAreaLayer'
+export * from './ExclusionLayer'
+export * from './PudoNodeLayer'

@@ -7,6 +7,7 @@ import { useMapStore } from '@/store/mapStore'
 import { NodeFiltersPanel } from '@/features/nodes/NodeFiltersPanel'
 import { NodeManagementPanel } from '@/features/nodes/NodeManagementPanel'
 import { CoverageAnalysisPanel } from '@/features/map/coverage/CoverageAnalysisPanel'
+import { PlannerPanel } from '@/features/map/PlannerPanel'
 import type { NodeFilters } from '@/features/nodes/filtering'
 import type { CombinedNode } from '@/features/nodes/types'
 import { cn } from '@/utils/cn'
@@ -74,14 +75,19 @@ export function MapSidebarPanel({
 
   return (
     <div className={cn('flex h-full w-80 flex-col border-r border-border bg-surface', className)}>
-      <Tabs defaultValue="nodes" className="flex flex-1 flex-col overflow-hidden">
+      <Tabs defaultValue="planner" className="flex flex-1 flex-col overflow-hidden">
         <TabsList className="px-3 pt-2">
+          <TabsTrigger value="planner">Planner</TabsTrigger>
           <TabsTrigger value="nodes">Nodes</TabsTrigger>
           <TabsTrigger value="coverage">Coverage</TabsTrigger>
           <TabsTrigger value="layers">Layers</TabsTrigger>
           <TabsTrigger value="filters">Filters</TabsTrigger>
           <TabsTrigger value="legend">Legend</TabsTrigger>
         </TabsList>
+
+        <TabsContent value="planner" className="flex-1 overflow-y-auto p-4">
+          <PlannerPanel />
+        </TabsContent>
 
         <TabsContent value="nodes" className="min-h-0 flex-1 overflow-hidden pt-0">
           <NodeManagementPanel

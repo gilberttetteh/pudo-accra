@@ -14,6 +14,9 @@ import {
   Footprints,
   Accessibility,
   AlertTriangle,
+  Target,
+  Ban,
+  Compass,
 } from '@/components/icons'
 
 /**
@@ -73,6 +76,9 @@ export const BASEMAPS: Record<BasemapId, BasemapConfig> = {
 }
 
 export type LayerId =
+  | 'pudo-nodes'
+  | 'study-area'
+  | 'exclusion-zones'
   | 'existing-nodes'
   | 'candidate-nodes'
   | 'road-network'
@@ -105,7 +111,43 @@ export interface LayerDefinition {
   order: number
 }
 
+/**
+ * The three layers below render the real siting analysis (see
+ * services/planner.ts); every other layer in this list is mock data. Their
+ * `order` values are fractional so they slot between existing layers without
+ * renumbering the whole array — the field is a sort key, not an index.
+ */
 const rawLayerDefinitions: LayerDefinition[] = [
+  {
+    id: 'study-area',
+    name: 'Study Area (Accra + Kasoa)',
+    icon: Compass,
+    defaultVisible: true,
+    defaultOpacity: 1,
+    minZoom: 10,
+    maxZoom: 18,
+    order: 0.5,
+  },
+  {
+    id: 'exclusion-zones',
+    name: 'Exclusion Zones',
+    icon: Ban,
+    defaultVisible: false,
+    defaultOpacity: 0.5,
+    minZoom: 10,
+    maxZoom: 18,
+    order: 2.5,
+  },
+  {
+    id: 'pudo-nodes',
+    name: 'PUDO Sites (analysis)',
+    icon: Target,
+    defaultVisible: true,
+    defaultOpacity: 1,
+    minZoom: 10,
+    maxZoom: 18,
+    order: 11.5,
+  },
   {
     id: 'admin-boundaries',
     name: 'Administrative Boundaries',
@@ -138,9 +180,9 @@ const rawLayerDefinitions: LayerDefinition[] = [
   },
   {
     id: 'coverage-areas',
-    name: 'Coverage Areas',
+    name: 'Coverage Areas (sample)',
     icon: Hexagon,
-    defaultVisible: true,
+    defaultVisible: false,
     defaultOpacity: 0.5,
     minZoom: 10,
     maxZoom: 18,
@@ -208,9 +250,11 @@ const rawLayerDefinitions: LayerDefinition[] = [
   },
   {
     id: 'existing-nodes',
-    name: 'Existing Nodes',
+    name: 'Existing Nodes (sample)',
     icon: MapPin,
-    defaultVisible: true,
+    // Off by default: this is sample data, and leaving it on top of the real
+    // analysis makes the two indistinguishable at a glance.
+    defaultVisible: false,
     defaultOpacity: 1,
     minZoom: 10,
     maxZoom: 18,
@@ -218,9 +262,9 @@ const rawLayerDefinitions: LayerDefinition[] = [
   },
   {
     id: 'candidate-nodes',
-    name: 'Candidate Nodes',
+    name: 'Candidate Nodes (sample)',
     icon: LayersIcon,
-    defaultVisible: true,
+    defaultVisible: false,
     defaultOpacity: 1,
     minZoom: 10,
     maxZoom: 18,

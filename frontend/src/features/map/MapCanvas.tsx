@@ -17,6 +17,9 @@ import {
   PopulationDensityLayer,
   AccessibilityLayer,
   WalkingRadiusLayer,
+  StudyAreaLayer,
+  ExclusionLayer,
+  PudoNodeLayer,
 } from './layers'
 import { useMapStore, MapTool } from '@/store/mapStore'
 import { useViewportController } from './viewportController'
@@ -101,7 +104,9 @@ export function MapCanvas({ existingNodes, candidateNodes, onToggleLayerPanel }:
         <MapReadyBridge />
 
         <BaseMapLayer />
+        <StudyAreaLayer />
         <AdminBoundariesLayer />
+        <ExclusionLayer />
         <PopulationDensityLayer />
         <FloodLayer />
         <CoverageLayer />
@@ -112,6 +117,7 @@ export function MapCanvas({ existingNodes, candidateNodes, onToggleLayerPanel }:
         <WalkingRadiusLayer existingNodes={existingNodes} candidateNodes={candidateNodes} />
         <NodeLayer existingNodes={existingNodes} />
         <CandidateLayer candidateNodes={candidateNodes} />
+        <PudoNodeLayer />
         <LabelLayer />
         <InteractionLayer />
       </MapContainer>
