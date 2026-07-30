@@ -10,6 +10,7 @@ import {
   SlidersHorizontal,
   FileText,
   Settings,
+  BarChart3,
 } from '@/components/icons'
 
 /**
@@ -35,6 +36,7 @@ export interface DashboardQuickActionsCardProps {
   onInspectNodes?: () => void
   onManageLayers?: () => void
   onOpenSettings?: () => void
+  onViewAnalytics?: () => void
 }
 
 interface QuickAction {
@@ -54,6 +56,7 @@ export function DashboardQuickActionsCard({
   onInspectNodes,
   onManageLayers,
   onOpenSettings,
+  onViewAnalytics,
 }: DashboardQuickActionsCardProps) {
   const actions: QuickAction[] = [
     { key: 'open-map', label: 'Open Map Workspace', icon: Map, onClick: onOpenMapWorkspace },
@@ -64,6 +67,7 @@ export function DashboardQuickActionsCard({
       icon: RefreshCw,
       onClick: onRunCoverageAnalysis,
     },
+    { key: 'view-analytics', label: 'View Analytics', icon: BarChart3, onClick: onViewAnalytics },
     {
       key: 'view-gaps',
       label: 'View Coverage Gaps',

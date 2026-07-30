@@ -53,6 +53,7 @@ export interface MapSidebarPanelProps {
   searchQuery: string
   onSearchChange: (value: string) => void
   onRowContextMenu: (node: CombinedNode, event: { clientX: number; clientY: number }) => void
+  initialTab?: 'nodes' | 'coverage' | 'layers' | 'filters' | 'legend'
   className?: string
 }
 
@@ -65,6 +66,7 @@ export function MapSidebarPanel({
   searchQuery,
   onSearchChange,
   onRowContextMenu,
+  initialTab = 'nodes',
   className,
 }: MapSidebarPanelProps) {
   const activeLayers = useMapStore((state) => state.activeLayers)
@@ -74,7 +76,7 @@ export function MapSidebarPanel({
 
   return (
     <div className={cn('flex h-full w-80 flex-col border-r border-border bg-surface', className)}>
-      <Tabs defaultValue="nodes" className="flex flex-1 flex-col overflow-hidden">
+      <Tabs defaultValue={initialTab} className="flex flex-1 flex-col overflow-hidden">
         <TabsList className="px-3 pt-2">
           <TabsTrigger value="nodes">Nodes</TabsTrigger>
           <TabsTrigger value="coverage">Coverage</TabsTrigger>

@@ -59,7 +59,11 @@ import type { MapSearchSuggestion } from '@/components/map/MapSearch'
  * TanStack Query data + mutations — MapCanvas's props contract already
  * matches what query/mutation results look like.
  */
-export function MapWorkspace() {
+export interface MapWorkspaceProps {
+  initialSidebarTab?: 'nodes' | 'coverage' | 'layers' | 'filters' | 'legend'
+}
+
+export function MapWorkspace({ initialSidebarTab }: MapWorkspaceProps = {}) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true)
   const [filters, setFilters] = useState<NodeFilters>(DEFAULT_NODE_FILTERS)
   const [searchQuery, setSearchQuery] = useState('')
@@ -267,6 +271,7 @@ export function MapWorkspace() {
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}
             onRowContextMenu={handleRowContextMenu}
+            initialTab={initialSidebarTab}
             className="hidden md:flex"
           />
         )}
