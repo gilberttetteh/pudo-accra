@@ -53,9 +53,10 @@ const TOP_CANDIDATE_COUNT = 5
 export interface DashboardPageProps {
   onOpenMapWorkspace?: () => void
   onInspectNodes?: () => void
+  onViewAnalytics?: () => void
 }
 
-export function DashboardPage({ onOpenMapWorkspace, onInspectNodes }: DashboardPageProps) {
+export function DashboardPage({ onOpenMapWorkspace, onInspectNodes, onViewAnalytics }: DashboardPageProps) {
   const existingNodes = useNodeStore((state) => state.existingNodes)
   const candidateNodes = useNodeStore((state) => state.candidateNodes)
   const addCandidate = useNodeStore((state) => state.addCandidate)
@@ -176,6 +177,7 @@ export function DashboardPage({ onOpenMapWorkspace, onInspectNodes }: DashboardP
         onViewCoverageGaps={handleViewCoverageGaps}
         onInspectNodes={onInspectNodes}
         onManageLayers={handleManageLayers}
+        onViewAnalytics={onViewAnalytics}
       />
 
       <DashboardChartsGrid
