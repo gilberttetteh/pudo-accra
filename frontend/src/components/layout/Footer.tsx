@@ -30,7 +30,7 @@ import { cn } from '@/utils/cn'
 export function Footer({ className }: { className?: string }) {
   return (
     <footer className={cn('border-t border-border bg-surface px-6 py-6', className)}>
-      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 text-caption text-text-tertiary sm:flex-row">
+      <div className="mx-auto flex max-w-[72rem] flex-col items-center justify-between gap-3 text-caption text-text-tertiary sm:flex-row">
         <span>© {new Date().getFullYear()} Accra PUDO Network Planning System.</span>
         <div className="flex items-center gap-4">
           <a href="#" className="hover:text-text-secondary">
@@ -47,3 +47,5 @@ export function Footer({ className }: { className?: string }) {
     </footer>
   )
 }
+
+

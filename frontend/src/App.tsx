@@ -1,8 +1,8 @@
+
 import { lazy, Suspense } from 'react'
 import { Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { DashboardLayout } from '@/layouts/DashboardLayout'
 import { LoadingState } from '@/components/feedback/LoadingState'
-import { EmptyState } from '@/components/feedback/EmptyState'
 import { NAV_ITEMS } from '@/constants/navigation'
 import type { NotificationItem } from '@/components/navigation/NotificationCenter'
 import type { BreadcrumbItem } from '@/components/navigation/Breadcrumb'
@@ -21,6 +21,10 @@ const DashboardPage = lazy(() =>
 
 const AnalyticsPage = lazy(() =>
   import('@/features/analytics').then((mod) => ({ default: mod.AnalyticsPage }))
+)
+
+const ReportsPage = lazy(() =>
+  import('@/features/reports').then((mod) => ({ default: mod.ReportsPage }))
 )
 
 // Static preview data for the shell smoke-test below. Computed once at
@@ -42,18 +46,6 @@ const PREVIEW_NOTIFICATIONS: NotificationItem[] = [
   },
 ]
 
-/** Simple "nothing here yet" placeholder for nav items whose page hasn't
- *  been built (Reports = Phase 9, Settings = not scheduled). Real
- *  content replaces this one route at a time — the route itself doesn't
- *  need to change when that happens. */
-function ComingSoonPage({ title, note }: { title: string; note: string }) {
-  return (
-    <div className="p-6">
-      <EmptyState title={`${title} isn't built yet`} description={note} />
-    </div>
-  )
-}
-
 /**
  * Root application component.
  *
@@ -68,8 +60,10 @@ function ComingSoonPage({ title, note }: { title: string; note: string }) {
  * /coverage and /nodes both render MapWorkspace (Coverage and Nodes are
  * tabs inside its shared sidebar panel, not separate pages) with a
  * different `initialSidebarTab` so each nav link opens the tab it's
- * named for. /reports and /settings are placeholders until those phases
- * are built.
+ * named for. /reports is the real Phase 9 Reports workspace. There is
+ * no Settings entry — it was removed from NAV_ITEMS entirely rather
+ * than left as a placeholder; any stray /settings link now falls
+ * through to the catch-all redirect below.
  */
 function App() {
   const location = useLocation()
@@ -92,6 +86,7 @@ function App() {
                 onOpenMapWorkspace={() => navigate('/map')}
                 onInspectNodes={() => navigate('/nodes')}
                 onViewAnalytics={() => navigate('/analytics')}
+                onOpenReports={() => navigate('/reports')}
               />
             }
           />
@@ -105,14 +100,7 @@ function App() {
             element={<MapWorkspace key={location.pathname} initialSidebarTab="nodes" />}
           />
           <Route path="/analytics" element={<AnalyticsPage />} />
-          <Route
-            path="/reports"
-            element={<ComingSoonPage title="Reports" note="Arrives in Phase 9." />}
-          />
-          <Route
-            path="/settings"
-            element={<ComingSoonPage title="Settings" note="Not scheduled yet." />}
-          />
+          <Route path="/reports" element={<ReportsPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Suspense>
@@ -121,3 +109,5 @@ function App() {
 }
 
 export default App
+
+

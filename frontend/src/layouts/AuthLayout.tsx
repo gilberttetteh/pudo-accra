@@ -42,9 +42,11 @@ export function AuthLayout({ children }: AuthLayoutProps) {
 
       <Logo size="md" />
 
-      <main className="w-full max-w-sm">
+      <main className="w-full max-w-[24rem]">
         <Card className="shadow-lg">{children ?? <Outlet />}</Card>
       </main>
     </div>
   )
 }
+
+

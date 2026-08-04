@@ -68,7 +68,7 @@ export function MapSearch({
   const showSuggestions = isFocused && suggestions.length > 0
 
   return (
-    <div className={cn('relative w-full max-w-sm', className)}>
+    <div className={cn('relative w-full max-w-[24rem]', className)}>
       <SearchInput
         value={value}
         onChange={onChange}
@@ -107,3 +107,5 @@ export function MapSearch({
     </div>
   )
 }
+
+

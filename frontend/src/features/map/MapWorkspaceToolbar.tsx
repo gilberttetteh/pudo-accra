@@ -131,7 +131,7 @@ export function MapWorkspaceToolbar({
         suggestions={searchSuggestions}
         onSelectSuggestion={onSelectSuggestion}
         placeholder="Search nodes, roads, areas…"
-        className="max-w-xs"
+        className="max-w-[20rem]"
       />
 
       <Divider orientation="vertical" className="h-6" />
@@ -251,3 +251,5 @@ export function MapWorkspaceToolbar({
     </div>
   )
 }
+
+

@@ -6,7 +6,6 @@ import {
   MapPin,
   BarChart3,
   FileText,
-  Settings,
 } from '@/components/icons'
 
 /**
@@ -31,5 +30,6 @@ export const NAV_ITEMS: NavItem[] = [
   { label: 'Nodes', href: '/nodes', icon: MapPin },
   { label: 'Analytics', href: '/analytics', icon: BarChart3 },
   { label: 'Reports', href: '/reports', icon: FileText },
-  { label: 'Settings', href: '/settings', icon: Settings },
 ]
+
+

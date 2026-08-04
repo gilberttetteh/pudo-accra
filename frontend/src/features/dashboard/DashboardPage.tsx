@@ -54,9 +54,15 @@ export interface DashboardPageProps {
   onOpenMapWorkspace?: () => void
   onInspectNodes?: () => void
   onViewAnalytics?: () => void
+  onOpenReports?: () => void
 }
 
-export function DashboardPage({ onOpenMapWorkspace, onInspectNodes, onViewAnalytics }: DashboardPageProps) {
+export function DashboardPage({
+  onOpenMapWorkspace,
+  onInspectNodes,
+  onViewAnalytics,
+  onOpenReports,
+}: DashboardPageProps) {
   const existingNodes = useNodeStore((state) => state.existingNodes)
   const candidateNodes = useNodeStore((state) => state.candidateNodes)
   const addCandidate = useNodeStore((state) => state.addCandidate)
@@ -178,6 +184,7 @@ export function DashboardPage({ onOpenMapWorkspace, onInspectNodes, onViewAnalyt
         onInspectNodes={onInspectNodes}
         onManageLayers={handleManageLayers}
         onViewAnalytics={onViewAnalytics}
+        onOpenReports={onOpenReports}
       />
 
       <DashboardChartsGrid
@@ -213,3 +220,5 @@ export function DashboardPage({ onOpenMapWorkspace, onInspectNodes, onViewAnalyt
     </div>
   )
 }
+
+

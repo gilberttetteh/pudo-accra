@@ -1,22 +1,24 @@
 import { Avatar } from '@/components/ui/Avatar'
 import { DropdownMenu } from '@/components/navigation/DropdownMenu'
-import { User, Settings, LogOut } from '@/components/icons'
+import { User, LogOut } from '@/components/icons'
 import { cn } from '@/utils/cn'
 
 /**
  * Purpose
  * -------
  * The account menu in TopNav — avatar trigger + dropdown with Profile /
- * Settings / Log out. Actions are wired to no-op callbacks for now
- * (auth doesn't exist until the backend integration phase); the shape
- * is ready to receive real handlers without changing the component API.
+ * Log out. Actions are wired to no-op callbacks for now (auth doesn't
+ * exist until the backend integration phase); the shape is ready to
+ * receive real handlers without changing the component API. There is no
+ * Settings item — the app has no Settings page (removed from
+ * NAV_ITEMS/routing entirely, not just hidden here).
  *
  * Props
  * -----
  * - user: { name: string; role?: string; avatarUrl?: string } — a
  *   display-only shape local to this component, not a shared domain
  *   model (Phase 2.5's domain layer will supersede this if/when built)
- * - onProfile? / onSettings? / onLogout?: () => void
+ * - onProfile? / onLogout?: () => void
  *
  * Example usage
  * -------------
@@ -41,12 +43,11 @@ export interface UserMenuUser {
 export interface UserMenuProps {
   user: UserMenuUser
   onProfile?: () => void
-  onSettings?: () => void
   onLogout?: () => void
   className?: string
 }
 
-export function UserMenu({ user, onProfile, onSettings, onLogout, className }: UserMenuProps) {
+export function UserMenu({ user, onProfile, onLogout, className }: UserMenuProps) {
   return (
     <DropdownMenu
       align="end"
@@ -71,10 +72,11 @@ export function UserMenu({ user, onProfile, onSettings, onLogout, className }: U
       }
       items={[
         { label: 'Profile', icon: User, onSelect: onProfile },
-        { label: 'Settings', icon: Settings, onSelect: onSettings },
         { label: '', divider: true },
         { label: 'Log out', icon: LogOut, onSelect: onLogout, destructive: true },
       ]}
     />
   )
 }
+
+

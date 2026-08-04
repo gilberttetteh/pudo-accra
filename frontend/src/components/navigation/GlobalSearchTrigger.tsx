@@ -39,16 +39,20 @@ export function GlobalSearchTrigger({ onClick, className }: GlobalSearchTriggerP
       type="button"
       onClick={onClick}
       className={cn(
-        'flex w-full max-w-sm items-center gap-2.5 rounded-md border border-border-strong bg-surface-secondary px-3 py-2 text-small text-text-tertiary',
+        'flex w-full min-w-[9rem] max-w-[24rem] items-center gap-2.5 overflow-hidden rounded-md border border-border-strong bg-surface-secondary px-3 py-2 text-small text-text-tertiary',
         'transition-colors duration-(--duration-fast) hover:border-border-strong hover:bg-surface-tertiary',
         className
       )}
     >
-      <Icon icon={Search} size={15} />
-      <span className="flex-1 text-left">Search nodes, coverage, reports…</span>
-      <kbd className="hidden items-center gap-0.5 rounded border border-border-strong bg-surface px-1.5 py-0.5 text-caption sm:flex">
+      <Icon icon={Search} size={15} className="shrink-0" />
+      <span className="flex-1 truncate whitespace-nowrap text-left">
+        Search nodes, coverage, reports…
+      </span>
+      <kbd className="hidden shrink-0 items-center gap-0.5 rounded border border-border-strong bg-surface px-1.5 py-0.5 text-caption sm:flex">
         ⌘K
       </kbd>
     </button>
   )
 }
+
+
