@@ -9,7 +9,6 @@ import {
   ClipboardList,
   SlidersHorizontal,
   FileText,
-  Settings,
   BarChart3,
 } from '@/components/icons'
 
@@ -19,8 +18,9 @@ import {
  * Shortcut grid (Step 8). Each action either dispatches a real handler
  * the parent wires up (most of them just call into existing store
  * actions/callbacks — nothing new is invented) or, for "Generate
- * Report," is a disabled placeholder per the Phase 7 prompt's explicit
- * "Do NOT build Reports" constraint.
+ * Report," navigates to the real Reports workspace now that Phase 9 is
+ * built (this was a disabled "Coming in Phase 9" placeholder before).
+ * There is no Settings action — the app has no Settings page.
  *
  * Props
  * -----
@@ -35,7 +35,7 @@ export interface DashboardQuickActionsCardProps {
   onViewCoverageGaps?: () => void
   onInspectNodes?: () => void
   onManageLayers?: () => void
-  onOpenSettings?: () => void
+  onOpenReports?: () => void
   onViewAnalytics?: () => void
 }
 
@@ -55,7 +55,7 @@ export function DashboardQuickActionsCard({
   onViewCoverageGaps,
   onInspectNodes,
   onManageLayers,
-  onOpenSettings,
+  onOpenReports,
   onViewAnalytics,
 }: DashboardQuickActionsCardProps) {
   const actions: QuickAction[] = [
@@ -85,10 +85,8 @@ export function DashboardQuickActionsCard({
       key: 'generate-report',
       label: 'Generate Report',
       icon: FileText,
-      disabled: true,
-      tooltip: 'Coming in Phase 9',
+      onClick: onOpenReports,
     },
-    { key: 'settings', label: 'Settings', icon: Settings, onClick: onOpenSettings },
   ]
 
   return (
@@ -125,3 +123,5 @@ export function DashboardQuickActionsCard({
     </Card>
   )
 }
+
+

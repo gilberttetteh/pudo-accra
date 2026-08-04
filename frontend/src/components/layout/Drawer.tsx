@@ -44,7 +44,14 @@ export interface DrawerProps {
   footer?: ReactNode
 }
 
-const widthClass = { sm: 'max-w-xs', md: 'max-w-sm', lg: 'max-w-md' }
+// Explicit rem values (Tailwind's own default max-w-{xs,sm,md} scale)
+// rather than the named utilities themselves — this project's Phase 2
+// design tokens define --spacing-xs/sm/md/lg/... (0.25rem/0.5rem/1rem/...
+// for padding/gap use), which share names with Tailwind's built-in
+// sizing scale and silently override it: max-w-sm was resolving to
+// 8px (--spacing-sm) instead of the expected 24rem. Arbitrary values
+// sidestep the collision entirely.
+const widthClass = { sm: 'max-w-[20rem]', md: 'max-w-[24rem]', lg: 'max-w-[28rem]' }
 const sideClass = {
   left: 'left-0 border-r data-[state=closed]:-translate-x-full',
   right: 'right-0 border-l data-[state=closed]:translate-x-full',
@@ -95,3 +102,5 @@ export function Drawer({
     </DialogPrimitive.Root>
   )
 }
+
+

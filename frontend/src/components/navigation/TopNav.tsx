@@ -83,7 +83,7 @@ export function TopNav({
       {left && <div className="hidden lg:block">{left}</div>}
 
       <div className="ml-auto flex flex-1 items-center justify-end gap-2 sm:flex-initial">
-        <div className="hidden flex-1 sm:block">
+        <div className="hidden min-w-0 flex-1 sm:block">
           <GlobalSearchTrigger onClick={onOpenSearch} />
         </div>
         <IconButton
@@ -102,3 +102,5 @@ export function TopNav({
     </header>
   )
 }
+
+

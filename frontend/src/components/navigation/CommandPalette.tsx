@@ -112,21 +112,24 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
     <DialogPrimitive.Root open={open} onOpenChange={handleOpenChange}>
       <DialogPrimitive.Portal>
         <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-neutral-900/40 backdrop-blur-[1px]" />
-        <DialogPrimitive.Content className="fixed left-1/2 top-24 z-50 w-[calc(100vw-2rem)] max-w-lg -translate-x-1/2 overflow-hidden rounded-xl border border-border bg-surface shadow-xl">
+        <DialogPrimitive.Content
+          className="fixed left-1/2 top-24 z-50 -translate-x-1/2 overflow-hidden rounded-xl border border-border bg-surface shadow-xl"
+          style={{ width: 'min(92vw, 32rem)' }}
+        >
           <VisuallyHidden asChild>
             <DialogPrimitive.Title>Command palette</DialogPrimitive.Title>
           </VisuallyHidden>
 
-          <div className="flex items-center gap-2.5 border-b border-border px-4 py-3">
-            <Icon icon={Search} size={16} className="text-text-tertiary" />
+          <div className="flex w-full items-center gap-2.5 border-b border-border px-4 py-3">
+            <Icon icon={Search} size={16} className="shrink-0 text-text-tertiary" />
             <input
               autoFocus
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Search commands…"
-              className="flex-1 bg-transparent text-body text-text-primary placeholder:text-text-tertiary focus:outline-none"
+              className="w-full min-w-0 flex-1 bg-transparent text-body text-text-primary placeholder:text-text-tertiary focus:outline-none"
             />
-            <kbd className="flex items-center gap-0.5 rounded border border-border-strong px-1.5 py-0.5 text-caption text-text-tertiary">
+            <kbd className="hidden shrink-0 items-center gap-0.5 rounded border border-border-strong px-1.5 py-0.5 text-caption text-text-tertiary sm:flex">
               Esc
             </kbd>
           </div>
@@ -176,3 +179,5 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
     </DialogPrimitive.Root>
   )
 }
+
+

@@ -48,7 +48,15 @@ export interface ModalProps {
   footer?: ReactNode
 }
 
-const sizeClass = { sm: 'max-w-sm', md: 'max-w-md', lg: 'max-w-lg', xl: 'max-w-2xl' }
+// See Drawer.tsx's comment: named max-w-{sm,md,lg,2xl} utilities are
+// silently overridden by this project's own --spacing-* design tokens
+// (same names, spacing-scale values). Explicit rem values avoid it.
+const sizeClass = {
+  sm: 'max-w-[24rem]',
+  md: 'max-w-[28rem]',
+  lg: 'max-w-[32rem]',
+  xl: 'max-w-[42rem]',
+}
 
 export function Modal({
   open,
@@ -100,3 +108,5 @@ export function Modal({
     </DialogPrimitive.Root>
   )
 }
+
+
